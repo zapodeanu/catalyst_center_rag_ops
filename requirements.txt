@@ -1,0 +1,11 @@
+urllib3
+requests
+python-dotenv
+chromadb
+langchain
+unstructured
+sentence-transformers
+openai
+langchain-openai
+ollama
+
