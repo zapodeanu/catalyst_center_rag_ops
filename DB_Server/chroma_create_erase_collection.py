@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2024 Cisco and/or its affiliates.
+Copyright (c) 2025 Cisco and/or its affiliates.
 This software is licensed to you under the terms of the Cisco Sample
 Code License, Version 1.1 (the "License"). You may obtain a copy of the
 License at
@@ -14,10 +14,10 @@ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied.
 """
 
-__author__ = "Gabriel Zapodeanu TME, ENB"
+__author__ = "Gabriel Zapodeanu PTME"
 __email__ = "gzapodea@cisco.com"
 __version__ = "0.1.0"
-__copyright__ = "Copyright (c) 2024 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2025 Cisco and/or its affiliates."
 __license__ = "Cisco Sample Code License, Version 1.1"
 
 import logging
@@ -26,7 +26,9 @@ import time
 import os
 
 from dotenv import load_dotenv
-load_dotenv('../catalyst_center_rag_ops/environment.env')
+
+os.chdir('../')
+load_dotenv('environment.env')
 
 os.environ['TZ'] = 'America/Los_Angeles'  # define the timezone for PST
 time.tzset()  # adjust the timezone, more info https://help.pythonanywhere.com/pages/SettingTheTimezone/
@@ -35,15 +37,15 @@ time.tzset()  # adjust the timezone, more info https://help.pythonanywhere.com/p
 logging.basicConfig(level=logging.INFO)
 
 DB_SERVER = os.getenv('DB_SERVER')
-DB_PORT = os.getenv('DB_PORT')
+DB_PORT = int(os.getenv('DB_PORT'))
 DB_PATH = os.getenv('DB_PATH')
 DB_COLLECTION = os.getenv('DB_COLLECTION')
-DB_PORT = 8010
 
 
 def main():
     """
     This app will ask the user for input for creating or deleting a collection from the Chroma DB server
+    User input: Delete (d) or Create (c) collection
     """
 
     # configure the Chroma DB server
@@ -64,4 +66,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

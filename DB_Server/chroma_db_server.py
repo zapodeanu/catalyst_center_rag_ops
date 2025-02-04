@@ -14,7 +14,7 @@ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied.
 """
 
-__author__ = "Gabriel Zapodeanu TME, ENB"
+__author__ = "Gabriel Zapodeanu PTME"
 __email__ = "gzapodea@cisco.com"
 __version__ = "0.1.0"
 __copyright__ = "Copyright (c) 2025 Cisco and/or its affiliates."
@@ -26,8 +26,7 @@ import time
 
 from dotenv import load_dotenv
 
-
-print(os.getcwd())
+os.chdir('../')
 
 load_dotenv('environment.env')
 
