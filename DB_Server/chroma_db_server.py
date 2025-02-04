@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2024 Cisco and/or its affiliates.
+Copyright (c) 2025 Cisco and/or its affiliates.
 This software is licensed to you under the terms of the Cisco Sample
 Code License, Version 1.1 (the "License"). You may obtain a copy of the
 License at
@@ -17,7 +17,7 @@ or implied.
 __author__ = "Gabriel Zapodeanu TME, ENB"
 __email__ = "gzapodea@cisco.com"
 __version__ = "0.1.0"
-__copyright__ = "Copyright (c) 2024 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2025 Cisco and/or its affiliates."
 __license__ = "Cisco Sample Code License, Version 1.1"
 
 import logging
@@ -44,7 +44,8 @@ DB_PORT = os.getenv('DB_PORT')
 
 def main():
     """
-    This application will start a new Chroma DB server, providing the path for the database, and the port
+    This application will start a new Chroma DB server.
+    It requires the server port and the path where to save tge database
     """
     if not os.path.exists(DB_PATH):
         os.makedirs(DB_PATH)
@@ -53,3 +54,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
