@@ -3,7 +3,7 @@ from sentence_transformers import SentenceTransformer
 
 
 # logging, Warning level, to file
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 sentences = ["interface Loopback0\n ip address 10.93.141.20 255.255.255.255"]
 
