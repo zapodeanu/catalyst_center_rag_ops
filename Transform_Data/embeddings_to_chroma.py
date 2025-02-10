@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2024 Cisco and/or its affiliates.
+Copyright (c) 2025 Cisco and/or its affiliates.
 This software is licensed to you under the terms of the Cisco Sample
 Code License, Version 1.1 (the "License"). You may obtain a copy of the
 License at
@@ -14,25 +14,23 @@ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied.
 """
 
-__author__ = "Gabriel Zapodeanu TME, ENB"
+__author__ = "Gabriel Zapodeanu PTME"
 __email__ = "gzapodea@cisco.com"
 __version__ = "0.1.0"
-__copyright__ = "Copyright (c) 2024 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2025 Cisco and/or its affiliates."
 __license__ = "Cisco Sample Code License, Version 1.1"
 
 import logging
 import os
 import time
-import chromadb
-from chromadb.config import Settings
 
+import chromadb
+from dotenv import load_dotenv
 # noinspection PyProtectedMember
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_chroma import Chroma
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
-from langchain_community.embeddings import SentenceTransformerEmbeddings
-from langchain_community.vectorstores.chroma import Chroma
-
-from dotenv import load_dotenv
+from langchain_huggingface import HuggingFaceEmbeddings
 
 os.environ['TZ'] = 'America/Los_Angeles'  # define the timezone for PST
 time.tzset()  # adjust the timezone, more info https://help.pythonanywhere.com/pages/SettingTheTimezone/
@@ -46,7 +44,7 @@ MODEL_NAME = 'all-MiniLM-L6-v2'
 
 # database server details
 DB_SERVER = os.getenv('DB_SERVER')
-DB_PORT = os.getenv('DB_PORT')
+DB_PORT = int(os.getenv('DB_PORT'))
 DB_COLLECTION = os.getenv('DB_COLLECTION')
 DB_PATH = os.getenv('DB_PATH')
 
@@ -104,7 +102,7 @@ def create_doc_embeddings(document):
 
     # split the document, create embeddings
     docs = split_docs(document=document, chunk_size=100, chunk_overlap=25, separator="!")
-    embeddings = SentenceTransformerEmbeddings(model_name=MODEL_NAME)
+    embeddings = HuggingFaceEmbeddings(model_name=MODEL_NAME)
 
     # update the chroma db collection with the new embeddings
     chroma_db = Chroma.from_documents(
@@ -119,8 +117,7 @@ def create_doc_embeddings(document):
         client=chroma_db_server,
         collection_name=DB_COLLECTION
     )
-
-    return chroma_collection.collection.count()
+    return chroma_collection._collection.count()
 
 
 def main():
