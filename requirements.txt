@@ -1,4 +1,4 @@
-urllib3
+urllib3==1.26.15
 requests
 python-dotenv
 chromadb
@@ -7,5 +7,7 @@ unstructured
 sentence-transformers
 openai
 langchain-openai
+langchain_community
+langchain_chroma
+langchain_huggingface
 ollama
-
