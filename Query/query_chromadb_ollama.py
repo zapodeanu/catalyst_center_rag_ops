@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2024 Cisco and/or its affiliates.
+Copyright (c) 2025 Cisco and/or its affiliates.
 This software is licensed to you under the terms of the Cisco Sample
 Code License, Version 1.1 (the "License"). You may obtain a copy of the
 License at
@@ -17,7 +17,7 @@ or implied.
 __author__ = "Gabriel Zapodeanu TME, ENB"
 __email__ = "gzapodea@cisco.com"
 __version__ = "0.1.0"
-__copyright__ = "Copyright (c) 2024 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2025 Cisco and/or its affiliates."
 __license__ = "Cisco Sample Code License, Version 1.1"
 
 import os
@@ -28,17 +28,18 @@ from dotenv import load_dotenv
 # noinspection PyProtectedMember
 from langchain._api import LangChainDeprecationWarning
 from langchain.chains.question_answering import load_qa_chain
-from langchain_community.embeddings import SentenceTransformerEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores.chroma import Chroma
 from langchain_community.chat_models import ChatOllama
 
 warnings.simplefilter("ignore", category=LangChainDeprecationWarning)  # to disable LangChain warnings
 
+os.chdir('../')
 load_dotenv('environment.env')
 
 # database server details
 DB_SERVER = os.getenv('DB_SERVER')
-DB_PORT = os.getenv('DB_PORT')
+DB_PORT = int(os.getenv('DB_PORT'))
 DB_COLLECTION = os.getenv('DB_COLLECTION')
 
 
@@ -56,7 +57,7 @@ def main():
     chroma_db_server = chromadb.HttpClient(host=DB_SERVER, port=DB_PORT)
 
     # define the model for creating embeddings for the query
-    embeddings = SentenceTransformerEmbeddings(model_name=MODEL_NAME)
+    embeddings = HuggingFaceEmbeddings(model_name=MODEL_NAME)
 
     # initialize the Chroma DB connection to server and collection
     chroma_db = Chroma(
@@ -72,15 +73,16 @@ def main():
     query = "y"
     while query != ' ':
         # prompt the user for the query input
-        query = input('\n\nHow may I help you?  ')
+        query = input('\n\nI am a NetOps bot. How may I help you?  ')
 
-        # search for the similarity matches from the Chroma DB server/collection
-        matching_docs = chroma_db.similarity_search(query)
+        query = query.strip()  # remove spaces
+        if query != '':
+            # search for the similarity matches from the Chroma DB server/collection
+            matching_docs = chroma_db.similarity_search(query, k=6)
 
-        # The similarity search result and query will be used to generate the answer using the LLM
-        answer = chain.run(input_documents=matching_docs, question=query, set_verbose=False)
-        print(answer)
-    return
+            # The similarity search result and query will be used to generate the answer using the LLM
+            answer = chain.invoke({'input_documents': matching_docs, 'question': query})
+            print(answer['output_text'])
 
 
 if __name__ == "__main__":
