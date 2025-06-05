@@ -26,7 +26,6 @@ import time
 
 from dotenv import load_dotenv
 
-os.chdir('../')
 
 load_dotenv('environment.env')
 
