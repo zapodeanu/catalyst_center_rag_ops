@@ -161,3 +161,4 @@ cython_debug/
 /environment.env
 /VDB/d947090c-2df6-49e8-b915-857db241d8dd/
 /VDB/chroma.sqlite3
+/DATASET/
