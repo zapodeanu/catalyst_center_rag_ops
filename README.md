@@ -1,4 +1,4 @@
-# Catalyst Center Retrieval-Augmented Generation GenAI for Ops Data
+# Catalyst Center Retrieval-Augmented Generation GenAIOps
 
 
 The repo includes the files to:
