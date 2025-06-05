@@ -27,7 +27,7 @@ import os
 
 from dotenv import load_dotenv
 
-os.chdir('../')
+
 load_dotenv('environment.env')
 
 os.environ['TZ'] = 'America/Los_Angeles'  # define the timezone for PST
@@ -38,13 +38,14 @@ logging.basicConfig(level=logging.INFO)
 
 DB_SERVER = os.getenv('DB_SERVER')
 DB_PORT = int(os.getenv('DB_PORT'))
-DB_PATH = os.getenv('DB_PATH')
 DB_COLLECTION = os.getenv('DB_COLLECTION')
 
 
+# noinspection PyUnusedLocal
 def main():
     """
-    This app will ask the user for input for creating or deleting a collection from the Chroma DB server
+    This app will ask the user for input for creating or deleting a collection from
+    the Chroma DB server
     User input: Delete (d) or Create (c) collection
     """
 
