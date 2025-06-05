@@ -42,11 +42,14 @@ DB_COLLECTION = os.getenv('DB_COLLECTION')
 # OpenAI key
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
+# Embeddings model
+MODEL_NAME = os.getenv('MODEL_NAME')
+
 OPENAI_MODEL = 'gpt-4o'
 
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-MODEL_NAME = os.getenv('MODEL_NAME')
+
 
 def main():
     """
@@ -73,12 +76,12 @@ def main():
     # Define the LLM used - OpenAI, model 'gpt-4o'
     llm = ChatOpenAI(model_name=OPENAI_MODEL, temperature=1)
 
-    # Create the prompt template
+    # Create the prompt
     genaiops_prompt = (
         "You are an assistant for network insights tasks."
         "Use the following pieces of retrieved context to answer "
         "the question. If you don't know the answer, say that you "
-        "don't know. The user is networking knowledgeable."
+        "don't know. The user has networking knowledgeable."
         "\n\n"
         "{context}"
     )
@@ -88,11 +91,8 @@ def main():
         ("human", "{input}"),
     ])
 
-    # Create the document chain
+    # Create the answer and question chain
     question_answer_chain = create_stuff_documents_chain(llm, prompt)
-
-    # Create the retrieval chain
-    rag_chain = create_retrieval_chain(retriever, question_answer_chain)
 
     print('\nHi, I am your InsightsPilot! Enter your query or press Enter to end.\n')
 
@@ -104,20 +104,15 @@ def main():
             print('\nInsightsPilot. Goodbye!\n')
             break
 
-        # Generate response using RAG chain
-        response = rag_chain.invoke({"input": query})
+        # Retrieve documents
+        matching_docs = retriever.invoke(query)
 
-        # Debug: show the proximity matches
-        '''
-        print("\n--- DEBUG: Retrieved Documents ---")
-        for i, doc in enumerate(response['context']):
-            print(f"Doc {i + 1}: {doc.page_content[:200]}...")
-            if hasattr(doc, 'metadata') and doc.metadata:
-                print(f"Metadata: {doc.metadata}")
-        print("--- End Retrieved Documents ---\n")
-        '''
-
-        print('InsightsPilot: ' + response['answer'] + '\n')
+        # Use question and answer chain to provide answer
+        response = question_answer_chain.invoke({
+            "context": matching_docs,
+            "input": query
+        })
+        print('InsightsPilot: ' + response + '\n')
 
     return
 
