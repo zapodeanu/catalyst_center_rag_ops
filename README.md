@@ -11,4 +11,3 @@ A second app will allow to erase the vector database and or create a new vector 
 Create vector representations and save them to local or server vector database.
 
 - Similarity searches using different LLMs and models
-The folder includes the files for a client to query a Chroma database using few different LLM models
