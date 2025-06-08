@@ -39,13 +39,12 @@ DB_SERVER = os.getenv('DB_SERVER')
 DB_PORT = int(os.getenv('DB_PORT'))
 DB_COLLECTION = os.getenv('DB_COLLECTION')
 
-# OpenAI key
+# OpenAI key and model
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+OPENAI_MODEL = os.getenv('OPENAI_MODEL')
 
 # Embeddings model
 MODEL_NAME = os.getenv('MODEL_NAME')
-
-OPENAI_MODEL = 'gpt-4o'
 
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
