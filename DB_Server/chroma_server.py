@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2025 Cisco and/or its affiliates.
+Copyright (c) 2026 Cisco and/or its affiliates.
 This software is licensed to you under the terms of the Cisco Sample
 Code License, Version 1.1 (the "License"). You may obtain a copy of the
 License at
@@ -14,20 +14,23 @@ IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
 or implied.
 """
 
-__author__ = "Gabriel Zapodeanu PTME"
+__author__ = "Gabriel Zapodeanu, Principal TME"
 __email__ = "gzapodea@cisco.com"
 __version__ = "0.1.0"
-__copyright__ = "Copyright (c) 2025 Cisco and/or its affiliates."
+__copyright__ = "Copyright (c) 2026 Cisco and/or its affiliates."
 __license__ = "Cisco Sample Code License, Version 1.1"
 
 import logging
 import os
+import subprocess
 import time
 
 from dotenv import load_dotenv
 
 
-load_dotenv('environment.env')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ENV_PATH = os.path.join(BASE_DIR, 'environment.env')
+load_dotenv(ENV_PATH)
 
 os.environ['TZ'] = 'America/Los_Angeles'  # define the timezone for PST
 time.tzset()  # adjust the timezone, more info https://help.pythonanywhere.com/pages/SettingTheTimezone/
@@ -43,11 +46,13 @@ DB_PORT = os.getenv('DB_PORT')
 def main():
     """
     This application will start a new Chroma DB server.
-    It requires the server port and the path where to save tge database
+    It requires the server port and the path where to save the database
     """
     if not os.path.exists(DB_PATH):
         os.makedirs(DB_PATH)
-    os.system('chroma run --port ' + DB_PORT + ' --path ' + DB_PATH)
+    command = ['chroma', 'run', '--port', str(DB_PORT), '--path', DB_PATH]
+    logging.info('Starting Chroma with command: %s', ' '.join(command))
+    subprocess.run(command, check=True)
 
 
 if __name__ == "__main__":

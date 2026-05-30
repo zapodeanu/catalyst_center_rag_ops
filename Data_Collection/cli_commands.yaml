@@ -1,0 +1,17 @@
+commands:
+  - show version
+  - show ip interface brief
+  - show running-config
+  - show cdp neighbors
+  - show mac address-table
+  - show ip arp
+  - show ip route
+  - show ip protocols
+  - show ip eigrp neighbors
+  - show ip eigrp topology active
+  - show ip bgp all
+  - show ip bgp neighbors
+  - show ip ospf neighbor
+  - show logging last 500
+  - show archive log config all | exclude enable
+  - show ip access-lists

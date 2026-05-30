@@ -1,15 +1,18 @@
 requests
 urllib3
 python-dotenv
+certifi
+PyYAML
+catalystcentersdk
 
 chromadb
 langchain
+langchain-text-splitters
 unstructured
 unstructured[csv]
 sentence-transformers
 openai
 langchain-openai
-langchain_community
 langchain_core
 langchain_chroma
 langchain_huggingface

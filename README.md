@@ -3,7 +3,7 @@
 NetworkInsights is a Retrieval-Augmented Generation (RAG) toolkit for network operations.
 It collects CLI outputs from Cisco Catalyst Center, builds embeddings in Chroma, and provides
 interactive query/conversation clients for OpenAI and Anthropic models.
-Some code updated with Cursor Codex 5.3.
+Written by Gabi Zapodeanu, Principal TME, updated with Cursor/ Codex 5.3.
 
 ## Repository Structure
 
