@@ -1,4 +1,4 @@
-# NetworkInsights RAG for Cisco Catalyst Center
+# Network Insights RAG for Cisco Catalyst Center
 
 NetworkInsights is a Retrieval-Augmented Generation (RAG) toolkit for network operations.
 It collects CLI outputs from Cisco Catalyst Center, builds embeddings in Chroma, and provides
